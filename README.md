@@ -14,7 +14,10 @@ Analitik SQL, birçok alanda kullanılmaktadır. İşte analitik SQL'in kullanı
 
 1.	İş Zekâsı ve Raporlama: Analitik SQL, işletmelerin verilerini analiz etmelerine ve iş zekası raporları oluşturmalarına yardımcı olur. Bu raporlar, işletmelere performanslarını izleme, trendleri anlama, pazar analizi yapma gibi konularda önemli bilgiler sunar.
 Örnek:
-
+SELECT ProductCategory, SUM(SalesAmount) AS TotalSales 
+FROM Sales 
+GROUP BY ProductCategory 
+ORDER BY TotalSales DESC; 
 Bu SQL sorgusu, "Sales" tablosundaki ürün kategorilerine göre toplam satış miktarını hesaplar ve en yüksek satışa sahip kategoriyi ilk sırada listeler.
 
 
@@ -25,7 +28,6 @@ SELECT AgeGroup, COUNT(*) AS CustomerCount
 FROM Customers 
 GROUP BY AgeGroup 
 HAVING CustomerCount > 100; 
-
 Bu SQL sorgusu, "Customers" tablosundaki müşterileri yaş gruplarına göre gruplar ve 100'den fazla müşterisi olan yaş gruplarını filtreler.
 
 
@@ -34,9 +36,7 @@ Bu SQL sorgusu, "Customers" tablosundaki müşterileri yaş gruplarına göre gr
 
 Örnek:
 EXPLAIN SELECT * FROM Orders WHERE OrderDate >= '2022-01-01'; 
-
 Bu SQL sorgusu, "Orders" tablosundaki '2022-01-01' tarihinden sonra yapılan siparişleri seçerken, sorgunun performansını analiz eder ve optimize edilmesi gereken alanları gösterir.
-Analitik SQL, yukarıda belirtilen alanlarda ve daha birçok alanda veri analitiği için kullanılır. Bu sorgular, işletmelere değerli içgörüler sağlayarak rekabet avantajı elde etmelerini sağlar.
 --------------------------------------------------------------------------------------------------------------------------------------
 
 WITH toplam_satis AS (
@@ -72,14 +72,11 @@ JOIN
   toplam_maliyet m ON t.yil = m.yil AND t.ay = m.ay
 ORDER BY
   t.yil, t.ay;
-
-
 Bu sorgu, "satislar" ve "maliyetler" adlı iki tablodan verileri kullanarak aylık satışları, maliyetleri ve karları hesaplamaktadır. İlk olarak, her bir tabloyu yıla ve aya göre gruplayan toplam satışları ve maliyetleri hesaplayan geçici tablolar (CTE'ler) oluşturulur. Ardından, bu geçici tabloları birleştirerek yıl, ay, toplam satışlar, toplam maliyetler ve karları içeren sonuç kümesini döndüren bir sorgu gerçekleştirilir. EXTRACT fonksiyonu ile tarih alanından yıl ve ay bilgileri alınır. Ayrıca, toplam_satis ve toplam_maliyet geçici tablolarını birleştirmek için JOIN ifadesi kullanılır. Sonuçlar, yıl ve ay sırasına göre sıralanır.
 
 --------------------------------------------------------------------------------------------------------------------------------------
 
 UPDATE customers SET status = 'VIP' WHERE total_orders > 10 AND total_revenue > 5000; 
-
 Bu örnekte, "customers" adlı bir tablo varsayılmıştır. Tabloda müşterilere ilişkin bilgiler (müşteri kimliği, toplam sipariş sayısı, toplam gelir vb.) bulunmaktadır. Bu SQL sorgusu, belirli bir koşulu sağlayan müşterilerin durumunu günceller.
 Sorgu, müşterilerin "total_orders" (toplam sipariş sayısı) değerinin 10'dan büyük ve "total_revenue" (toplam gelir) değerinin 5000'den büyük olduğu durumları seçer. Ardından, bu müşterilerin "status" (durum) alanını "VIP" olarak günceller.
 Bu örnekteki veri işleme yaklaşımı, verilere dayalı bir koşulu sağlayan kayıtları güncellemek için kullanılır. Bu örnekte, belirli bir işlemi gerçekleştirmek için bir UPDATE ifadesi kullanılmıştır. Bu tür bir yaklaşımı, müşteri segmentasyonu, özel teklifler veya indirimler gibi senaryolarda kullanabilirsiniz.
@@ -92,7 +89,6 @@ SELECT departman,yil,
 FROM satis_tablosu
 GROUP BY departman, yil
 ORDER BY departman,yil;
-
 Bu örnekte “satis_tablosu” isimli tablodan departman ve yıla göre satış verilerini analiz eder. Yani her departman ve her yıl için toplam satış miktarı (“toplam_satis”) , ortalama satış miktarı (“ortalama_satis”) , en yüksek satış miktarı (“max_satis”) , en düşük satış miktarı (“min_satis”) görüntülenir ve gelen sonuçlar da departman ve yıla göre sıralanır sonuçlar öyle getirilir.
 
 
@@ -106,9 +102,7 @@ Location.Name as “Çekildiği Yer”
 FROM Movie 
 JOIN M_Location ON Movie.MID = M_Location.MID 
 JOIN Location ON M_Location=LID=Location.LID
-
-
-By örnekte “Movie”, “M_Location” ve “Location” adındaki üç tablodan, filmlerin bilgilerini ve çekildikleri yerleri birleştirerek çekim yerlerine göre film detaylarını getirmektir.
+Bu örnekte “Movie”, “M_Location” ve “Location” adındaki üç tablodan, filmlerin bilgilerini ve çekildikleri yerleri birleştirerek çekim yerlerine göre film detaylarını getirmektir.
 
 
 
@@ -127,7 +121,6 @@ GROUP BY
     DATE_TRUNC('month', order_date)
 ORDER BY
     month;
-
 Bu SQL sorgusu, "orders" tablosundaki verileri işleyerek belirli bir tarih aralığındaki siparişlerin aylık bazda toplam gelirini, ortalama sipariş tutarını ve benzersiz müşteri sayısını hesaplar
 
 
